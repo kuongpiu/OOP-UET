@@ -1,27 +1,39 @@
 #include<bits/stdc++.h>
 using namespace std;
-void chuanHoa(string &str){
-    int fi = 0;
-    int la = 0;
-    int length = str.length();
-    while(str[fi] == ' '){
-        fi++;
+struct Birth{
+    int day,month,year;
+    Birth(int day, int month, int year){
+        this->day = day;
+        this->month = month;
+        this->year = year;
     }
-    while(str[length - 1 - la] == ' '){
-        la++;
+};
+enum Sex{
+    MALE,
+    FEMALE,
+};
+struct Student{
+    string iD,name;
+    Sex sex;
+    Birth birth;
+    Sinhvien(const string &iD,const string &name, Sex sex, Birth birth){
+        this->iD = iD;
+        this->name = name;
+        this->sex = sex;
+        this->birth = birth;
     }
-    la = length - la - fi;
-    str = str.substr(fi, la);
+};
 
-    str = str + " ";
-    int lo = 0;
-    int hi = str.find("www ", lo);
-    cout << hi << endl;
-}
+struct Node{
+    Student data;
+    Node* pre;
+    Node* next;
+
+};
+
 int main(){
-    string str;
-    getline(cin,str);
-    chuanHoa(str);
-    cout << "." + str + ".";
+    Sex s = MALE;
+    Birth birth(31,10,2000);
+    Student st("18020248", "cuong", s, birth);
     return 0;
 }
