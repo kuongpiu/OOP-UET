@@ -7,19 +7,22 @@ import sample.GameField;
 
 public class Bullet {
     private double x,y,w,h;
-    private double vx,vy,velocity = 4;
+    private double vx,vy,velocity = 0.5;
+    private double tx,ty;
     private Image image;
     public boolean hit = false;
-    public Bullet(Tower tower){
+    private Enemy enemy;
+    public Bullet(Tower tower, Enemy enemy){
+        this.enemy = enemy;
         this.x = tower.getX();
         this.y = tower.getY();
         image = GameField.loadImage("C:\\Users\\Cuong\\Desktop\\OOP-UET\\src\\picture\\build.png");
-        w = 40;
-        h = 40;
+        w = 20;
+        h = 20;
     }
-    private void setVelocity(Enemy enemy){
-        vx = enemy.getX() - x;
-        vy = enemy.getY() - y;
+    private void setVelocity(double tx, double ty){
+        vx = tx - x;
+        vy = ty - y;
         double sum = vx*vx + vy*vy;
         sum = Math.sqrt(sum);
         vx /= sum;
@@ -27,19 +30,40 @@ public class Bullet {
         vx *= velocity;
         vy *= velocity;
     }
-    public boolean fly(Enemy enemy,GraphicsContext gc){
-        setVelocity(enemy);
-        if(enemy.getX() <= x && x <= enemy.getX() + enemy.getW() && enemy.getY() <= y && y <= enemy.getY() + enemy.getH()){
+    private void fly(double tx, double ty){
+        this.tx = tx;
+        this.ty = ty;
+        setVelocity(tx,ty);
+        x += vx;
+        y += vy;
+    }
+
+    private boolean isHit(Enemy enemy) {
+        double tx = enemy.getX();
+        double ty = enemy.getY();
+        if(tx - 10 <= x && x <= tx + enemy.getW() && ty <= y && y-10 <= ty + enemy.getH()){
             return true;
         }else{
-            gc.drawImage(image,x,y,w,h);
-            x += vx;
-            y += vy;
+            return false;
+        }
+    }
+    public boolean attack(GraphicsContext gc){
+
+        if(!isHit(enemy)){
+            fly(enemy.getX(),enemy.getY());
+            show(gc);
+            hit = false;
+        }else{
+            enemy = null;
+            hit = true;
         }
         return hit;
     }
 
-
+    private void show(GraphicsContext gc){
+        if(!hit)
+            gc.drawImage(image,x,y,w,h);
+    }
 
 
 }

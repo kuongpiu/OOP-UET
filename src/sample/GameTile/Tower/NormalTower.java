@@ -22,13 +22,7 @@ public class NormalTower extends Tower{
         gc.drawImage(tower,x,y,w,h);
         gc.drawImage(spider,x+20,y-10);
 
-        if(fire){
-            if(bullet.move(gc)){
-                fire = false;
-            }
-        }else{
-            bullet = null;
-        }
+
     }
 
 }

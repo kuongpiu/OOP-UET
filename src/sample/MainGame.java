@@ -8,14 +8,16 @@ import javafx.scene.input.MouseEvent;
 import sample.EnemyCode.Enemy;
 import sample.EnemyCode.NormalEnemy;
 import sample.GameTile.PosTower;
+import sample.GameTile.Tower.Bullet;
 import sample.GameTile.Tower.NormalTower;
 import sample.GameTile.Tower.Tower;
 
 public class MainGame {
+    private static final long TIME = 100000000;
     public void play(GameStage stage){
 
         GameField gameField = new GameField();
-        gameField.AddEnemy(100);
+        gameField.AddEnemy(10);
 
         stage.getScene().setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
@@ -49,7 +51,9 @@ public class MainGame {
             public void handle(long currentNanoTime) {
 
                 gameField.show(stage);
-                gameField.play();
+                gameField.play(stage.getGC(), currentNanoTime/TIME);
+                System.out.println(currentNanoTime/TIME);
+
 
             }
         }.start();

@@ -60,15 +60,21 @@ public class GameField {
             return false;
         }
     }
-    public void play(){
+    public void play(GraphicsContext gc, long curTime){
+
         for(Tower tower: towers){
             for(Enemy enemy: enemies){
-                if(inRange(tower,enemy) && !tower.getFire()){
-                    tower.setTarget(enemy);
-                }else{
-                    tower.reset();
+                if(tower.getFire()){
+                    tower.attack(gc);
                 }
-
+                else{
+                    if(curTime - tower.getLasTime() >= tower.getSpeed()){
+                        if(tower.inRange(enemy)){
+                            tower.attack(enemy,gc);
+                            tower.setLasTime(curTime);
+                        }
+                    }
+                }
             }
         }
     }

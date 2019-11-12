@@ -38,9 +38,6 @@ public class GameStage {
         game.play(this);
     }
 
-    public Stage getStage() {
-        return stage;
-    }
 
     public Scene getScene() {
         return scene;

@@ -31,7 +31,7 @@ public abstract class Enemy implements GameEntity {
             case NORMAL_ENEMY:
                 blood = Blood.LOW_BLOOD;
                 prize = Prize.NORMAL_PRIZE;
-                velocity = 5;
+                velocity = 1;
                 w = 40;
                 h = 50;
                 break;
@@ -77,8 +77,8 @@ public abstract class Enemy implements GameEntity {
             vy =  road.getY(pos)- h - y;
         }else{
             pos = 0;
-            x = new Random().nextInt(700) - 700;
-            y = new Random().nextInt(400) + 400;
+            x = new Random().nextInt(1000) - 1000;
+            y = new Random().nextInt(500) + 500;
         }
         double sum = vx*vx + vy*vy;
         sum = Math.sqrt(sum);
