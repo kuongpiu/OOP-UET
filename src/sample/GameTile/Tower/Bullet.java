@@ -14,11 +14,13 @@ public class Bullet {
     private Enemy enemy;
     public Bullet(Tower tower, Enemy enemy){
         this.enemy = enemy;
-        this.x = tower.getX();
+        this.x = tower.getX() + 18;
         this.y = tower.getY();
-        image = GameField.loadImage("C:\\Users\\Cuong\\Desktop\\OOP-UET\\src\\picture\\build.png");
-        w = 20;
-        h = 20;
+        w = 15;
+        h = 15;
+    }
+    public void setImage(Image image){
+        this.image = image;
     }
     private void setVelocity(double tx, double ty){
         vx = tx - x;

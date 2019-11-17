@@ -6,6 +6,7 @@ import sample.GameTile.Road;
 import sample.GameTile.Tower.Tower;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import sample.Item.Menu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,7 @@ public class MapGame {
     }
     private void loadBG(GraphicsContext gc){
 
-        gc.drawImage(background, 0,0,GameStage.MAX_WIDTH,GameStage.MAX_HEIGHT);
+        gc.drawImage(background, 0,0,GameStage.MAX_WIDTH,GameStage.MAX_HEIGHT - Menu.MENU_HEIGHT);
 
     }
 

@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import sample.EnemyCode.Enemy;
 import sample.EnemyCode.NormalEnemy;
+import sample.Item.Menu;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,10 +23,12 @@ public class GameField {
     private List<Tower> towers;
     private List<Enemy> enemies;
     private MapGame mapGame;
+    private Menu menu;
     public GameField(){
         towers = new ArrayList<>();
         mapGame = new MapGame();
         enemies = new ArrayList<>();
+        menu = new Menu();
     }
     public void AddEnemy(int number){
         for(int i = 0; i < number; i++){
@@ -48,6 +51,7 @@ public class GameField {
         for(Tower tower: towers){
             tower.show(gameStage.getGC());
         }
+        menu.show(gameStage.getGC());
     }
     public static boolean inRange(Tower tower, Enemy enemy){
         double px = enemy.getX() - tower.getX();

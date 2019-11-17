@@ -13,14 +13,18 @@ public abstract class Enemy implements GameEntity {
     protected int w,h;
     protected int blood, prize, velocity;
     protected int pos = 0;
+    protected Image image;
 
     public Enemy(TypeEnemy type){
-        x = new Random().nextInt(700) - 700 ;
+        x = new Random().nextInt(700) - 700;
         y = new Random().nextInt(400) + 400;
+
         switch (type){
             case SMALLER_ENEMY:
                 blood = Blood.NORMAL_BLOOD;
                 prize = Prize.NORMAL_PRIZE;
+                w = 20;
+                h = 30;
                 velocity = 2;
                 break;
             case BOSS_ENEMY:
@@ -31,6 +35,7 @@ public abstract class Enemy implements GameEntity {
             case NORMAL_ENEMY:
                 blood = Blood.LOW_BLOOD;
                 prize = Prize.NORMAL_PRIZE;
+                image = GameField.loadImage("D:\\Github\\OOP-UET\\monster.png");
                 velocity = 1;
                 w = 40;
                 h = 50;

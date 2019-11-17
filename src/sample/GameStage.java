@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 
 public class GameStage {
-    public static final int MAX_WIDTH = 720, MAX_HEIGHT = 406;
+    public static final int MAX_WIDTH = 720, MAX_HEIGHT = 466;
     private Stage stage;
     private Scene scene;
     private Group root;
@@ -29,8 +29,7 @@ public class GameStage {
         root.getChildren().add(canvas);
 
         stage.setTitle("Tower Defense");
-        stage.setMaxHeight(MAX_HEIGHT);
-        stage.setMaxWidth(MAX_WIDTH);
+
         stage.setResizable(false);
     }
     public void play(){

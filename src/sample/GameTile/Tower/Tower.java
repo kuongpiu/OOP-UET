@@ -1,5 +1,6 @@
 package sample.GameTile.Tower;
 
+import javafx.scene.image.Image;
 import sample.EnemyCode.Enemy;
 import sample.GameField;
 import sample.GameTile.GameTile;
@@ -16,37 +17,51 @@ public abstract class Tower implements GameTile {
     protected int x, y, w, h;
     protected boolean fire = false;
     protected Bullet bullet;
-
+    protected Image image;
+    protected Image bulletImage;
     public Tower(TypeOfTower type, int x, int y) {
         switch (type) {
             case NormalTower: {
                 hitSpeed = MEDIUM;
                 range = SMALL;
                 dame = DAME_NHO;
-
+                image = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\betru.png");
+                bulletImage = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\muiten.png");
+                w = 60;
+                h = 70;
                 break;
             }
-            case SniperTower: {
+            case StoneTower: {
                 hitSpeed = SLOW;
-                range = LARGE;
-                dame = DAME_TO;
-                break;
-            }
-            case MachineGunTower: {
-                hitSpeed = FAST;
                 dame = DAME_TB;
                 range = SMALL;
+                image = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\stoneTower.png");
+                bulletImage = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\stone1.png");
+                w = 50;
+                h = 70;
+                break;
+            }
+            case MagicTower: {
+                hitSpeed = MEDIUM;
+                dame = DAME_TB;
+                range = LARGE;
+                image = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\magicTower1.png");
+                bulletImage = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\bulletMagic.png");
+                w = 60;
+                h = 70;
                 break;
             }
         }
         fire = false;
         this.x = x;
         this.y = y;
-        w = 60;
-        h = 70;
+
     }
 
-    abstract public void show(GraphicsContext gc);
+    public void show(GraphicsContext gc) {
+
+        gc.drawImage(image,x,y,w,h);
+    }
 
     @Override
     public double getX() {
@@ -94,6 +109,7 @@ public abstract class Tower implements GameTile {
     }
     public void attack(Enemy enemy, GraphicsContext gc){
         bullet = new Bullet(this, enemy);
+        bullet.setImage(bulletImage);
         fire = true;
     }
 

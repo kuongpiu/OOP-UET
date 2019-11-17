@@ -13,7 +13,6 @@ public class NormalTower extends Tower{
 
 
 
-    @Override
     public void show(GraphicsContext gc) {
 
         Image tower = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\betru.png");

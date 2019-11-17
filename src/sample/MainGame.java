@@ -9,6 +9,7 @@ import sample.EnemyCode.Enemy;
 import sample.EnemyCode.NormalEnemy;
 import sample.GameTile.PosTower;
 import sample.GameTile.Tower.Bullet;
+import sample.GameTile.Tower.MagicTower;
 import sample.GameTile.Tower.NormalTower;
 import sample.GameTile.Tower.Tower;
 
@@ -28,7 +29,7 @@ public class MainGame {
                 GameStage.curMouse.setX(x);
                 GameStage.curMouse.setY(y);
 
-                System.out.println(x + "-" + y);
+               // System.out.println(x + "-" + y);
             }
         });
         stage.getScene().setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -39,7 +40,7 @@ public class MainGame {
                 if(PosTower.isContains(x,y)){
                     int px = PosTower.posX.get(PosTower.indexOfTower);
                     int py = PosTower.posY.get(PosTower.indexOfTower);
-                    gameField.addTower(new NormalTower(px,py));
+                    gameField.addTower(new MagicTower(  px,py));
                     PosTower.build();
                 }
             }
@@ -52,7 +53,7 @@ public class MainGame {
 
                 gameField.show(stage);
                 gameField.play(stage.getGC(), currentNanoTime/TIME);
-                System.out.println(currentNanoTime/TIME);
+                //System.out.println(currentNanoTime/TIME);
 
 
             }
