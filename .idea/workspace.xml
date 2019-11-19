@@ -125,7 +125,7 @@
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="sample.Item.*" />
+          <option name="PATTERN" value="sample.Shope.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>

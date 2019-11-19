@@ -1,4 +1,4 @@
-package sample.Item;
+package sample.Shope;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
@@ -8,10 +8,13 @@ import sample.GameTile.Tower.TypeOfTower;
 
 public class Item implements GameTile {
     private Image image;
+    private int cost = 100;
     public double x,y;
     public static final int WIDTH_ITEM = 50;
     public static final int HEIGHT_ITEM = 50;
-    TypeOfTower type;
+    public TypeOfTower type;
+
+
     public Item(Image image, double x, double y){
         this.image = image;
         this.x = x;
@@ -26,15 +29,15 @@ public class Item implements GameTile {
     }
     public Item(String str, TypeOfTower type){
         this.image = GameField.loadImage(str);
+        this.type = type;
 
     }
-    public TypeOfTower getType(){
-        return type;
+    public int getCost(){
+        return cost;
     }
-
     @Override
     public void show(GraphicsContext gc) {
-        gc.drawImage(image,x,y,WIDTH_ITEM,HEIGHT_ITEM);
+            gc.drawImage(image,x,y,WIDTH_ITEM,HEIGHT_ITEM);
 
     }
 

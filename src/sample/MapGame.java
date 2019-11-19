@@ -1,12 +1,11 @@
 package sample;
 
 import sample.GameTile.PosTower;
-import sample.GameTile.Road;
 
 import sample.GameTile.Tower.Tower;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import sample.Item.Menu;
+import sample.Shope.Menu;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +13,11 @@ import java.util.List;
 
 public class MapGame {
     private Image background;
-    private Road road;
     private PosTower posOfBuild;
     private List<Tower> towers;
     public MapGame(){
         background = GameField.loadImage("D:\\Github\\OOP-UET\\background.jpg");
-        road = new Road();
+
         posOfBuild = new PosTower();
         towers = new ArrayList<>();
     }
@@ -34,7 +32,4 @@ public class MapGame {
         posOfBuild.show(gameStage.getGC());
     }
 
-    public Road getRoad(){
-        return road;
-    }
 }

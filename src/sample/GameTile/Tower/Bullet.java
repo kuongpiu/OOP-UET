@@ -7,17 +7,23 @@ import sample.GameField;
 
 public class Bullet {
     private double x,y,w,h;
-    private double vx,vy,velocity = 0.5;
+    private double vx,vy,velocity = 8;
     private double tx,ty;
     private Image image;
     public boolean hit = false;
+    public int dame;
     private Enemy enemy;
     public Bullet(Tower tower, Enemy enemy){
         this.enemy = enemy;
         this.x = tower.getX() + 18;
         this.y = tower.getY();
+        dame = tower.dame;
         w = 15;
         h = 15;
+    }
+    public void setWH(int w, int h){
+        this.w = w;
+        this.h = h;
     }
     public void setImage(Image image){
         this.image = image;
@@ -43,19 +49,22 @@ public class Bullet {
     private boolean isHit(Enemy enemy) {
         double tx = enemy.getX();
         double ty = enemy.getY();
-        if(tx - 10 <= x && x <= tx + enemy.getW() && ty <= y && y-10 <= ty + enemy.getH()){
+        if(tx - 5 <= x && x <= tx + enemy.getW() && ty <= y && y-5 <= ty + enemy.getH()){
+
             return true;
         }else{
             return false;
         }
     }
     public boolean attack(GraphicsContext gc){
-
-        if(!isHit(enemy)){
+        if(enemy == null || enemy.isDead()){
+            hit = true;
+        }else if(!isHit(enemy)){
             fly(enemy.getX(),enemy.getY());
             show(gc);
             hit = false;
         }else{
+            enemy.setBlood(dame);
             enemy = null;
             hit = true;
         }

@@ -1,17 +1,14 @@
 package sample;
 
-import javafx.stage.Stage;
-import sample.GameTile.GameTile;
-import sample.GameTile.Tower.NormalTower;
+import sample.EnemyCode.BossEnemy;
+import sample.EnemyCode.SmallerEnemy;
 import sample.GameTile.Tower.Tower;
-import javafx.animation.AnimationTimer;
-import javafx.event.EventHandler;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
-import javafx.scene.input.MouseEvent;
 import sample.EnemyCode.Enemy;
 import sample.EnemyCode.NormalEnemy;
-import sample.Item.Menu;
+import sample.Shope.Coin;
+import sample.Shope.Menu;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -23,65 +20,82 @@ public class GameField {
     private List<Tower> towers;
     private List<Enemy> enemies;
     private MapGame mapGame;
-    private Menu menu;
+    public Menu menu;
+    public Coin coin;
     public GameField(){
         towers = new ArrayList<>();
         mapGame = new MapGame();
         enemies = new ArrayList<>();
         menu = new Menu();
+        coin = new Coin();
     }
     public void AddEnemy(int number){
         for(int i = 0; i < number; i++){
             enemies.add(new NormalEnemy());
+            enemies.add(new BossEnemy());
+            enemies.add(new SmallerEnemy());
         }
     }
     public void addTower(Tower tower){
         towers.add(tower);
     }
-    public void show(GameStage gameStage){
+    public void show(GameStage gameStage, long time){
         mapGame.show(gameStage);
 
 
 
         for (Enemy enemy : enemies){
-            enemy.move(gameStage.getGC(),mapGame.getRoad());
+            enemy.move(gameStage.getGC());
             enemy.show(gameStage.getGC());
         }
 
         for(Tower tower: towers){
-            tower.show(gameStage.getGC());
+            tower.show(gameStage.getGC(), time);
         }
+
         menu.show(gameStage.getGC());
+
+        showDetails(gameStage.getGC());
     }
-    public static boolean inRange(Tower tower, Enemy enemy){
-        double px = enemy.getX() - tower.getX();
-        double py = enemy.getY() - tower.getY();
-        double distance = px*px + py*py;
-        distance = Math.sqrt(distance);
-        if(distance <= tower.getRange()){
-            return true;
-        }else{
-            return false;
-        }
-    }
+
+
     public void play(GraphicsContext gc, long curTime){
 
         for(Tower tower: towers){
-            for(Enemy enemy: enemies){
-                if(tower.getFire()){
-                    tower.attack(gc);
-                }
-                else{
-                    if(curTime - tower.getLasTime() >= tower.getSpeed()){
-                        if(tower.inRange(enemy)){
-                            tower.attack(enemy,gc);
-                            tower.setLasTime(curTime);
-                        }
+            if(tower.getFire()){
+                tower.attack(gc);
+                continue;
+            }
+            for(int i = 0; i < enemies.size(); i++){
+                Enemy enemy = enemies.get(i);
+                if(enemy.isDead()){
+                    enemies.remove(enemy);
+                    i--;
+                }else{
+                    if(tower.inRange(enemy) && tower.isFree(curTime)){
+                        tower.attack(enemy,gc);
                     }
                 }
             }
         }
+
     }
+
+    public void buildTower(int x, int y){
+        if(menu.openMenu){
+            Tower tower = menu.buildTower(x,y,coin);
+            if(tower == null){
+                return;
+            }
+            addTower(tower);
+        }
+    }
+    private void showDetails(GraphicsContext gc){
+        coin.show(gc);
+        Image tree = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\treeUp.png");
+        gc.drawImage(tree,262,14,147,148);
+    }
+
 
 
 
@@ -117,3 +131,17 @@ public class GameField {
 
 
 }
+
+/*
+public static boolean inRange(Tower tower, Enemy enemy){
+        double px = enemy.getX() - tower.getX();
+        double py = enemy.getY() - tower.getY();
+        double distance = px*px + py*py;
+        distance = Math.sqrt(distance);
+        if(distance <= tower.getRange()){
+            return true;
+        }else{
+            return false;
+        }
+    }
+ */

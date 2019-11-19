@@ -27,6 +27,7 @@ public abstract class Tower implements GameTile {
                 dame = DAME_NHO;
                 image = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\betru.png");
                 bulletImage = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\muiten.png");
+                //bullet.setWH(10,10);
                 w = 60;
                 h = 70;
                 break;
@@ -35,10 +36,10 @@ public abstract class Tower implements GameTile {
                 hitSpeed = SLOW;
                 dame = DAME_TB;
                 range = SMALL;
-                image = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\stoneTower.png");
-                bulletImage = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\stone1.png");
+                image = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\da1.png");
+                bulletImage = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\stone.png");
                 w = 50;
-                h = 70;
+                h = 65;
                 break;
             }
             case MagicTower: {
@@ -47,7 +48,7 @@ public abstract class Tower implements GameTile {
                 range = LARGE;
                 image = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\magicTower1.png");
                 bulletImage = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\bulletMagic.png");
-                w = 60;
+                w = 50;
                 h = 70;
                 break;
             }
@@ -59,7 +60,9 @@ public abstract class Tower implements GameTile {
     }
 
     public void show(GraphicsContext gc) {
-
+        gc.drawImage(image,x,y,w,h);
+    }
+    public void show(GraphicsContext gc, long time) {
         gc.drawImage(image,x,y,w,h);
     }
 
@@ -123,7 +126,15 @@ public abstract class Tower implements GameTile {
     public int getSpeed(){
         return hitSpeed;
     }
-
+    public boolean isFree(long curTime){
+        long distance = curTime - lasTime;
+        if(distance > hitSpeed){
+            lasTime = curTime;
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 
 
