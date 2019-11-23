@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 
 public class GameStage {
-    public static final int MAX_WIDTH = 720, MAX_HEIGHT = 466;
+    public static final int MAX_WIDTH = 720, MAX_HEIGHT = 406;
     private Stage stage;
     private Scene scene;
     private Group root;
@@ -36,16 +36,21 @@ public class GameStage {
         MainGame game = new MainGame();
         game.play(this);
     }
+    public void setGameGroup(){
+        scene.setRoot(root);
+    }
 
 
     public Scene getScene() {
         return scene;
     }
-
+    public void setGroup(Group group){
+        scene.setRoot(group);
+    }
     public GraphicsContext getGC() {
         return canvas.getGraphicsContext2D();
     }
-    public void show(Scene scene){
+    public void show(){
         stage.setScene(scene);
         stage.show();
     }

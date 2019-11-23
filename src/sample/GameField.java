@@ -7,8 +7,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import sample.EnemyCode.Enemy;
 import sample.EnemyCode.NormalEnemy;
-import sample.Shope.Coin;
-import sample.Shope.Menu;
+import sample.Player.Player;
+import sample.Shop.Menu;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -21,13 +21,13 @@ public class GameField {
     private List<Enemy> enemies;
     private MapGame mapGame;
     public Menu menu;
-    public Coin coin;
+    private Player player;
     public GameField(){
         towers = new ArrayList<>();
         mapGame = new MapGame();
         enemies = new ArrayList<>();
         menu = new Menu();
-        coin = new Coin();
+        player = new Player();
     }
     public void AddEnemy(int number){
         for(int i = 0; i < number; i++){
@@ -69,6 +69,7 @@ public class GameField {
             for(int i = 0; i < enemies.size(); i++){
                 Enemy enemy = enemies.get(i);
                 if(enemy.isDead()){
+                    player.bonus(enemy.getPrize());
                     enemies.remove(enemy);
                     i--;
                 }else{
@@ -78,12 +79,15 @@ public class GameField {
                 }
             }
         }
-
+    }
+    public Player getPlayer(){
+        return player;
     }
 
-    public void buildTower(int x, int y){
+    public void buildTower(double x, double y,GameStage gameStage){
         if(menu.openMenu){
-            Tower tower = menu.buildTower(x,y,coin);
+            menu.preView(gameStage.getGC());
+            Tower tower = menu.buildTower(x,y,this.player);
             if(tower == null){
                 return;
             }
@@ -91,7 +95,7 @@ public class GameField {
         }
     }
     private void showDetails(GraphicsContext gc){
-        coin.show(gc);
+        player.show(gc);
         Image tree = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\treeUp.png");
         gc.drawImage(tree,262,14,147,148);
     }

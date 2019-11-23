@@ -9,7 +9,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         GameStage gameStage = new GameStage(primaryStage);
-        gameStage.play();
+        GameStart gameStart = new GameStart();
+        gameStart.start(gameStage);
+
     }
 
 

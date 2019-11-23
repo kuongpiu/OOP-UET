@@ -1,6 +1,7 @@
 package sample.EnemyCode;
 
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
 import sample.GameField;
 import sample.GameTile.Road;
 import javafx.scene.canvas.GraphicsContext;
@@ -105,6 +106,15 @@ public abstract class Enemy implements GameEntity {
         }
     }
 
+    protected void dinhDang(GraphicsContext gc, double dodai){
+        gc.setLineWidth(1);
+        if(dodai < w/2){
+            gc.setStroke(Color.RED);
+        }else{
+            gc.setStroke(Color.GREEN);
+        }
+    }
+
 
     public int getW() {
         return w;
@@ -134,5 +144,8 @@ public abstract class Enemy implements GameEntity {
     @Override
     public double getY() {
         return y;
+    }
+    public int getPrize(){
+        return prize;
     }
 }

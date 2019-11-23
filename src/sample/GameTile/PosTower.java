@@ -12,7 +12,6 @@ public class PosTower{
     private static final Integer[] X = {60  ,180  ,403 ,560, 140, 165, 260, 465};
     private static final Integer[] Y = {245 ,316  ,11  ,60,  172, 45,  250, 222};
 
-
     public static List<Integer> posX = Arrays.asList(X);
     public static List<Integer> posY = Arrays.asList(Y);
     public static boolean[] isBuild = new boolean[posX.size()];
@@ -34,7 +33,7 @@ public class PosTower{
     public static void build(){
         isBuild[indexOfTower] = true;
     }
-    public static boolean isContains(int x, int y){
+    public static boolean isContains(double x, double y){
         boolean contain = false;
         for(int i = 0; i < areaBuild.length; i++){
             int begX = areaBuild[i][0];

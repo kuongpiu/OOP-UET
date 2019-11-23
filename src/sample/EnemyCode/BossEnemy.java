@@ -1,6 +1,7 @@
 package sample.EnemyCode;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import sample.GameField;
 
 public class BossEnemy extends Enemy {
@@ -20,11 +21,13 @@ public class BossEnemy extends Enemy {
     protected void showBlood(GraphicsContext gc) {
         double k = Blood.HIGH_BLOOD/(double)w;
         double width = blood/k;
-
+        dinhDang(gc, width);
         gc.beginPath();
         gc.moveTo(x,y);
         gc.lineTo(x+width,y);
         gc.closePath();
+
         gc.stroke();
     }
+
 }

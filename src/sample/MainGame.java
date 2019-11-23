@@ -5,17 +5,16 @@ import javafx.event.EventHandler;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
 import sample.GameTile.PosTower;
-import sample.Shope.Menu;
+import sample.Shop.Menu;
 
 public class MainGame {
     private static final long TIME = 100000000;
     public void play(GameStage stage){
-
+        GraphicsContext gc = stage.getGC();
+        stage.setGameGroup();
         GameField gameField = new GameField();
         gameField.AddEnemy(10);
-
         stage.getScene().setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -24,8 +23,8 @@ public class MainGame {
 
                 GameStage.curMouse.setX(x);
                 GameStage.curMouse.setY(y);
-
                 System.out.println(x + "-" + y);
+
             }
         });
 
@@ -36,16 +35,13 @@ public class MainGame {
                 int x = (int)mouseEvent.getX();
                 int y = (int)mouseEvent.getY();
                 if(PosTower.isContains(x,y)){
-                    int px = PosTower.posX.get(PosTower.indexOfTower);
-                    int py = PosTower.posY.get(PosTower.indexOfTower);
-                    //gameField.addTower(new MagicTower(px,py));
                     loadMenu(gameField.menu, x,y);
-                }else {
-                    gameField.buildTower(x,y);
                 }
+                loadMenu(gameField.menu, x,y);
+
             }
         });
-        GraphicsContext gc = stage.getGC();
+
         new AnimationTimer(){
 
             @Override
@@ -53,29 +49,25 @@ public class MainGame {
                 long time = currentNanoTime/TIME;
                 gameField.show(stage, time);
                 gameField.play(stage.getGC(), time);
-                //System.out.println(currentNanoTime/TIME);
-                drawLine(gc);
 
-
+                gameField.buildTower(GameStage.curMouse.getX(),GameStage.curMouse.getY(),stage);
+                //drawCircle(gc);
             }
         }.start();
-        stage.show(stage.getScene());
+        stage.show();
     }
-    private void drawLine(GraphicsContext gc){
-        gc.beginPath();
-        gc.moveTo(GameStage.curMouse.getX(),GameStage.curMouse.getY());
-        gc.setStroke(Color.RED);
-        gc.setLineWidth(2);
-        gc.lineTo(GameStage.curMouse.getX() + 50, GameStage.curMouse.getY());
-        gc.closePath();
-        gc.stroke();
-
-
-
+    private void drawCircle(GraphicsContext gc){
+        gc.setFill(Color.RED);
+        gc.setLineWidth(1);
+        gc.setGlobalAlpha(1);
+        gc.fillOval(GameStage.curMouse.getX() - 25, GameStage.curMouse.getY() - 25, 50,50);
+        gc.strokeOval(GameStage.curMouse.getX() - 25 , GameStage.curMouse.getY() - 25, 50,50);
+        gc.setGlobalAlpha(1);
     }
     private void loadMenu(Menu menu, int x, int y){
+
         if(menu.openMenu == true){
-            menu.openMenu = false;
+            menu.buyItem = menu.isContains(x,y);
         }
         else{
             menu.openMenu = true;

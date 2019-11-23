@@ -5,16 +5,17 @@ import sample.EnemyCode.Enemy;
 import sample.GameField;
 import sample.GameTile.GameTile;
 import javafx.scene.canvas.GraphicsContext;
+import sample.GameTile.PosTower;
 
 public abstract class Tower implements GameTile {
-    public static final int FAST = 2, MEDIUM = 5, SLOW = 15;
-    public static final int LARGE = 200, SMALL = 150;
+    public static final int FAST = 1, MEDIUM = 2, SLOW = 5;
+
     public static final int DAME_TO = 100, DAME_TB = 50, DAME_NHO = 30;
     protected int hitSpeed;
     protected long lasTime = 0;
-    protected int range;
+    protected double range;
     protected int dame;
-    protected int x, y, w, h;
+    protected double x, y, w, h;
     protected boolean fire = false;
     protected Bullet bullet;
     protected Image image;
@@ -23,33 +24,32 @@ public abstract class Tower implements GameTile {
         switch (type) {
             case NormalTower: {
                 hitSpeed = MEDIUM;
-                range = SMALL;
+                range = NormalTower.RANGE;
                 dame = DAME_NHO;
                 image = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\betru.png");
                 bulletImage = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\muiten.png");
-                //bullet.setWH(10,10);
-                w = 60;
-                h = 70;
+                w = NormalTower.NORMAL_TOWER_WIDTH;
+                h = NormalTower.NORMAL_TOWER_HEIGHT;
                 break;
             }
             case StoneTower: {
                 hitSpeed = SLOW;
                 dame = DAME_TB;
-                range = SMALL;
+                range = StoneTower.RANGE;
                 image = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\da1.png");
                 bulletImage = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\stone.png");
-                w = 50;
-                h = 65;
+                w = StoneTower.STONE_TOWER_WIDTH;
+                h = StoneTower.STONE_TOWER_HEIGHT;
                 break;
             }
             case MagicTower: {
                 hitSpeed = MEDIUM;
                 dame = DAME_TB;
-                range = LARGE;
+                range = MagicTower.RANGE;
                 image = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\magicTower1.png");
                 bulletImage = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\bulletMagic.png");
-                w = 50;
-                h = 70;
+                w = MagicTower.MAGIC_TOWER_WIDTH;
+                h = MagicTower.MAGIC_TOWER_HEIGHT;
                 break;
             }
         }
@@ -116,7 +116,6 @@ public abstract class Tower implements GameTile {
         fire = true;
     }
 
-
     public long getLasTime(){
         return lasTime;
     }
@@ -135,10 +134,8 @@ public abstract class Tower implements GameTile {
             return false;
         }
     }
-
-
-
-    public int getRange() {
+    public double getRange(){
         return range;
     }
+
 }
