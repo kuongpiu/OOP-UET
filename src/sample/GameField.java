@@ -14,14 +14,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 public class GameField {
     private List<Tower> towers;
     private List<Enemy> enemies;
+    private int wave = 0,step = 0;
     private MapGame mapGame;
     public Menu menu;
     private Player player;
+    private Random random = new Random();
     public GameField(){
         towers = new ArrayList<>();
         mapGame = new MapGame();
@@ -29,13 +32,7 @@ public class GameField {
         menu = new Menu();
         player = new Player();
     }
-    public void AddEnemy(int number){
-        for(int i = 0; i < number; i++){
-            enemies.add(new NormalEnemy());
-            enemies.add(new BossEnemy());
-            enemies.add(new SmallerEnemy());
-        }
-    }
+
     public void addTower(Tower tower){
         towers.add(tower);
     }
@@ -99,6 +96,55 @@ public class GameField {
         Image tree = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\treeUp.png");
         gc.drawImage(tree,262,14,147,148);
     }
+    public void createEnemy(long time){
+        if(enemies.isEmpty()){
+            step++;
+            addEnemy(step);
+        }
+        if(step == 5){
+            wave = 1;
+        }else if(step == 10){
+            wave = 2;
+        }else if(step > 15){
+            wave = 3;
+        }
+    }
+    private void addEnemy(int num){
+        for(int i = 0; i < num; i++){
+            if(wave == 0){
+                enemies.add(new SmallerEnemy());
+                initXY(enemies.get(enemies.size()-1));
+            }else if(wave == 1){
+                enemies.add(new SmallerEnemy());
+                initXY(enemies.get(enemies.size()-1));
+                enemies.add(new NormalEnemy());
+                initXY(enemies.get(enemies.size()-1));
+            }else if(wave == 2){
+                enemies.add(new SmallerEnemy());
+                initXY(enemies.get(enemies.size()-1));
+                enemies.add(new NormalEnemy());
+                initXY(enemies.get(enemies.size()-1));
+                enemies.add(new BossEnemy());
+                initXY(enemies.get(enemies.size()-1));
+            }
+        }
+    }
+    private void initXY(Enemy enemy){
+        double x,y;
+        if(wave == 1){
+            x = random.nextInt(400)  - 550;
+            y = random.nextInt(300) + GameStage.MAX_HEIGHT + 50;
+        }else if(wave == 2){
+            x = random.nextInt(800)  - 900;
+            y = random.nextInt(500) + GameStage.MAX_HEIGHT + 200;
+        }else {
+            x = random.nextInt(200)  - 250;
+            y = random.nextInt(200) + GameStage.MAX_HEIGHT + 20;
+        }
+        enemy.setX(x);
+        enemy.setY(y);
+    }
+
 
 
 

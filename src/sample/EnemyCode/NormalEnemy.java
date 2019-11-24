@@ -8,6 +8,7 @@ import sample.GameField;
 import java.util.Random;
 
 public class NormalEnemy extends Enemy {
+    public static double WIDTH = 25, HEIGHT = 30, VELOCITY = 0.8, BLOOD = 100, PRIZE = 20;
     public NormalEnemy(){
         super(TypeEnemy.NORMAL_ENEMY);
         initImage();
@@ -22,9 +23,10 @@ public class NormalEnemy extends Enemy {
 
     @Override
     protected void showBlood(GraphicsContext gc) {
-        double k = Blood.NORMAL_BLOOD/(double)w;
+        double k = BLOOD/(double)w;
         double width = blood/k;
 
+        dinhDang(gc, width);
         gc.beginPath();
         gc.moveTo(x,y);
         gc.lineTo(x+width,y);

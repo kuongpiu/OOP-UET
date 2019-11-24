@@ -13,7 +13,7 @@ public class Coin {
         balance = 100;
         imageCoin = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\work.png");
     }
-    public void bonus(int coin){
+    public void bonus(double coin){
         balance += coin;
     }
     public boolean isEnough(int cost){

@@ -29,7 +29,7 @@ public class Player {
         return success;
     }
 
-    public void bonus(int prize) {
+    public void bonus(double prize) {
         coin.bonus(prize);
     }
 

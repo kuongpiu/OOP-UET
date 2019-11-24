@@ -3,9 +3,11 @@ package sample.EnemyCode;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import sample.GameField;
+import sample.GameStage;
 import sample.GameTile.Road;
 import javafx.scene.canvas.GraphicsContext;
 import sample.GameEntity;
+import sample.GameTile.Tower.NormalTower;
 
 import java.util.Random;
 
@@ -14,44 +16,40 @@ public abstract class Enemy implements GameEntity {
     final private Road roadSecond = new Road(2);
 
     protected double x,y,vx,vy;
-    protected int w,h;
-    protected int blood, prize, velocity;
+    protected double w,h;
+    protected double blood, prize, velocity;
     protected int pos = 0;
     protected Image image;
 
     protected Road road;
 
     public Enemy(TypeEnemy type){
-
-        x = new Random().nextInt(700) - 700;
-        y = new Random().nextInt(1000) + 500;
-
+        x = new Random().nextInt(200)  - 250;
+        y = new Random().nextInt(200) + GameStage.MAX_HEIGHT + 20;
         switch (type){
             case SMALLER_ENEMY:
-                blood = Blood.LOW_BLOOD;
-                prize = Prize.NORMAL_PRIZE;
-                w = 20;
-                h = 25;
-                velocity = 2;
+                blood = SmallerEnemy.BLOOD;
+                prize = SmallerEnemy.PRIZE;
+                w = SmallerEnemy.WIDTH;
+                h = SmallerEnemy.HEIGHT;
+                velocity = SmallerEnemy.VELOCITY;
                 break;
             case BOSS_ENEMY:
-                blood = Blood.HIGH_BLOOD;
-                prize = Prize.HIGH_PRIZE;
-                w = 40;
-                h = 50;
-                velocity = 1;
+                blood = BossEnemy.BLOOD;
+                prize = BossEnemy.PRIZE;
+                w = BossEnemy.WIDTH;
+                h = BossEnemy.HEIGHT;
+                velocity = BossEnemy.VELOCITY;
                 break;
             case NORMAL_ENEMY:
-                blood = Blood.NORMAL_BLOOD;
-                prize = Prize.NORMAL_PRIZE;
-                velocity = 1;
-                w = 25;
-                h = 30;
+                blood = NormalEnemy.BLOOD;
+                prize = NormalEnemy.PRIZE;
+
+                w = NormalEnemy.WIDTH;
+                h = NormalEnemy.HEIGHT;
+                velocity = NormalEnemy.VELOCITY;
                 break;
-            case TANKER_ENEMY:
-                blood = Blood.HIGH_BLOOD * 2;
-                prize = Prize.HIGH_PRIZE * 2;
-                velocity = 1;
+
         }
         initRoad();
 
@@ -68,9 +66,6 @@ public abstract class Enemy implements GameEntity {
         }
 
     }
-
-
-
     public void show(GraphicsContext gc){
         gc.drawImage(image,x,y,w,h);
         showBlood(gc);
@@ -116,11 +111,11 @@ public abstract class Enemy implements GameEntity {
     }
 
 
-    public int getW() {
+    public double getW() {
         return w;
     }
 
-    public int getH() {
+    public double getH() {
         return h;
     }
     public double getX(){
@@ -145,7 +140,7 @@ public abstract class Enemy implements GameEntity {
     public double getY() {
         return y;
     }
-    public int getPrize(){
+    public double getPrize(){
         return prize;
     }
 }

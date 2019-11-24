@@ -26,8 +26,8 @@ public abstract class Tower implements GameTile {
                 hitSpeed = MEDIUM;
                 range = NormalTower.RANGE;
                 dame = DAME_NHO;
-                image = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\betru.png");
-                bulletImage = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\muiten.png");
+                image = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\normalTower.png");
+                bulletImage = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\danXanh.png");
                 w = NormalTower.NORMAL_TOWER_WIDTH;
                 h = NormalTower.NORMAL_TOWER_HEIGHT;
                 break;

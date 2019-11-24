@@ -3,6 +3,7 @@ package sample;
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import sample.GameTile.PosTower;
@@ -14,7 +15,6 @@ public class MainGame {
         GraphicsContext gc = stage.getGC();
         stage.setGameGroup();
         GameField gameField = new GameField();
-        gameField.AddEnemy(10);
         stage.getScene().setOnMouseMoved(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent mouseEvent) {
@@ -34,10 +34,14 @@ public class MainGame {
             public void handle(MouseEvent mouseEvent) {
                 int x = (int)mouseEvent.getX();
                 int y = (int)mouseEvent.getY();
+
+
                 if(PosTower.isContains(x,y)){
                     loadMenu(gameField.menu, x,y);
                 }
-                loadMenu(gameField.menu, x,y);
+
+                loadMenu(gameField.menu,x,y);
+
 
             }
         });
@@ -49,25 +53,31 @@ public class MainGame {
                 long time = currentNanoTime/TIME;
                 gameField.show(stage, time);
                 gameField.play(stage.getGC(), time);
-
+                gameField.createEnemy(time);
                 gameField.buildTower(GameStage.curMouse.getX(),GameStage.curMouse.getY(),stage);
                 //drawCircle(gc);
+                System.out.println(time);
             }
         }.start();
         stage.show();
     }
     private void drawCircle(GraphicsContext gc){
-        gc.setFill(Color.RED);
-        gc.setLineWidth(1);
-        gc.setGlobalAlpha(1);
-        gc.fillOval(GameStage.curMouse.getX() - 25, GameStage.curMouse.getY() - 25, 50,50);
-        gc.strokeOval(GameStage.curMouse.getX() - 25 , GameStage.curMouse.getY() - 25, 50,50);
-        gc.setGlobalAlpha(1);
+        double x = 0;
+        double y = 0;
+        Image image = GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\cungten.png");
+        gc.save();
+
+        gc.translate(GameStage.curMouse.getX(),GameStage.curMouse.getY());
+        gc.rotate(0);
+        gc.drawImage(image,0,0);
+
+        gc.restore();
+
     }
     private void loadMenu(Menu menu, int x, int y){
 
         if(menu.openMenu == true){
-            menu.buyItem = menu.isContains(x,y);
+            menu.buyItem = menu.isBuy(x,y);
         }
         else{
             menu.openMenu = true;

@@ -3,6 +3,7 @@ package sample.Shop;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import sample.GameField;
 import sample.GameStage;
@@ -17,6 +18,10 @@ public class Menu implements GameTile {
     private ArrayList<Item> items;
     public boolean openMenu = false;
     public boolean buyItem = false;
+    private ButtonItem exit = new ButtonItem( GameField.loadImage("D:\\Github\\OOP-UET\\src\\picture\\escape.png"),
+            Item.WIDTH_ITEM,
+            Item.HEIGHT_ITEM
+    );
     public Menu(){
         items = new ArrayList<>();
         init();
@@ -25,8 +30,9 @@ public class Menu implements GameTile {
 
 
         items.add(new Item("D:\\Github\\OOP-UET\\src\\picture\\itemMagicTower1.png", TypeOfTower.MagicTower));
-        items.add(new Item("D:\\Github\\OOP-UET\\src\\picture\\itemSniper.png", TypeOfTower.NormalTower));
+        items.add(new Item("D:\\Github\\OOP-UET\\src\\picture\\itemNormal.png", TypeOfTower.NormalTower));
         items.add(new Item("D:\\Github\\OOP-UET\\src\\picture\\itemStone.png", TypeOfTower.StoneTower));
+
     }
     public Tower buildTower(double x, double y,Player player){
         Tower tower = null;
@@ -63,6 +69,10 @@ public class Menu implements GameTile {
             items.get(i).x = items.get(i-1).x + Item.WIDTH_ITEM;
             items.get(i).y = y - Item.HEIGHT_ITEM;
         }
+        exit.setXY(items.get(items.size()-1).getX(),
+                items.get(items.size()-1).getY() + Item.HEIGHT_ITEM
+        );
+
     }
     @Override
     public void show(GraphicsContext gc) {
@@ -70,6 +80,7 @@ public class Menu implements GameTile {
             for(Item item: items){
                 item.show(gc);
             }
+            exit.show(gc);
         }
     }
     public void preView(GraphicsContext gc){
@@ -117,7 +128,7 @@ public class Menu implements GameTile {
         }
         return null;
     }
-    public boolean isContains(double x, double y){
+    public boolean isBuy(double x, double y){
         for(Item item: items){
             double xLo = item.x;
             double xHi = item.x + Item.WIDTH_ITEM;
@@ -127,6 +138,13 @@ public class Menu implements GameTile {
                 return true;
             }
         }
+        //KIEM TRA XEM CO THOAT MENU KHONG
+        if(x > exit.getX() && x < exit.getX()+Item.WIDTH_ITEM
+            && y > exit.getY() && y < exit.getY()+Item.HEIGHT_ITEM){
+            openMenu = false;
+            System.out.println("yeyeyeyeyye");
+        }
+        System.out.println("Noonono");
         return false;
     }
 
